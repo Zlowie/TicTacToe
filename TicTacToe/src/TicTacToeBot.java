@@ -1,9 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.util.random.RandomGenerator;
 
-public class TicTacToe extends JFrame {
-
+public class TicTacToeBot extends JFrame {
     private JButton[][] boardButtons;
     private JPanel boardPanel;
     private JPanel controlButtonPanel;
@@ -32,8 +35,8 @@ public class TicTacToe extends JFrame {
     private int Oscore = 0;
     private int Tiescore = 0;
 
-    public TicTacToe() {
-        setTitle("Tic Tac Toe - Local 2 Player");
+    public TicTacToeBot() {
+        setTitle("Tic Tac Toe - Bot Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(500,500));
         setMinimumSize(new Dimension(400,400));
@@ -128,27 +131,19 @@ public class TicTacToe extends JFrame {
                         if (isPlayerX) {
                             clickedButton.setText("X");
                             clickedButton.setForeground(Color.red);
-                            playerLabel.setText("O to move");
-                        } else {
-                            clickedButton.setText("O");
-                            clickedButton.setForeground(Color.blue);
-                            playerLabel.setText("X to move");
                         }
 
                         // Check if the game has ended
                         if (checkWinCondition()) {
                             playerLabel.setText("Player " + (isPlayerX ? "X" : "O") + " wins!");
-                            if(isPlayerX){
-                                Xscore++;
-                            }
-                            else{
-                                Oscore++;
-                            }
+                            Xscore++;
                             OscoreLabel.setText(String.valueOf(Oscore));
                             XscoreLabel.setText(String.valueOf(Xscore));
 
                             gameEnded = true;
                             return;
+                        } else{
+                            isPlayerX = !isPlayerX;
                         }
 
                         if (checkDrawCondition()) {
@@ -159,8 +154,10 @@ public class TicTacToe extends JFrame {
                             return;
                         }
 
+                        botMove();
+
                         // Switch to the next player
-                        isPlayerX = !isPlayerX;
+                        //isPlayerX = !isPlayerX;
                     }
                 });
 
@@ -319,5 +316,36 @@ public class TicTacToe extends JFrame {
         XscoreLabel.setText("0");
         OscoreLabel.setText("0");
         TiescoreLabel.setText("0");
+    }
+
+    private void botMove(){
+        String[][] board = new String[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = boardButtons[i][j].getText();
+            }
+        }
+
+        int x = (int)(Math.random()*3);
+        int y = (int)(Math.random()*3);
+
+        if(board[x][y].equals("")) {
+            boardButtons[x][y].setForeground(Color.blue);
+            boardButtons[x][y].setText("O");
+        } else {
+            botMove();
+        }
+
+        checkDrawCondition();
+        checkWinCondition();
+
+        if(checkWinCondition()){
+            playerLabel.setText("Bot O wins!");
+            if(!isPlayerX){
+                Oscore++;
+            }
+            OscoreLabel.setText(String.valueOf(Oscore));
+        }
+        isPlayerX = true;
     }
 }
