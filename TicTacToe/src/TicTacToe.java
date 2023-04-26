@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 public class TicTacToe extends JFrame {
 
+    // Creates variables and components
     private JButton[][] boardButtons;
     private JPanel boardPanel;
     private JPanel controlButtonPanel;
@@ -39,6 +40,7 @@ public class TicTacToe extends JFrame {
         setMinimumSize(new Dimension(400,400));
         setLocationRelativeTo(null);
 
+        // Initializing all the JComponents
         Logo = new ImageIcon("C:\\Kode\\Java\\TicTacToe\\TicTacToe\\src\\Logo.png");
         boardButtons = new JButton[3][3];
         controlPanel = new JPanel(new GridLayout(1, 3));
@@ -88,7 +90,7 @@ public class TicTacToe extends JFrame {
         // Initialize the board
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                //making all the 9 board buttons
+                // Making all the 9 board buttons
                 JButton button = new JButton("");
                 button.setFont(new Font("Arial", Font.PLAIN, 60));
                 button.setBorder(BorderFactory.createEmptyBorder());
@@ -119,7 +121,7 @@ public class TicTacToe extends JFrame {
                             return;
                         }
 
-                        // Check if the button is already filled
+                        // Checks if the button is already filled
                         if (!clickedButton.getText().equals("")) {
                             return;
                         }
@@ -135,7 +137,7 @@ public class TicTacToe extends JFrame {
                             playerLabel.setText("X to move");
                         }
 
-                        // Check if the game has ended
+                        // Checks if the game has ended
                         if (checkWinCondition()) {
                             playerLabel.setText("Player " + (isPlayerX ? "X" : "O") + " wins!");
                             if(isPlayerX){
@@ -151,6 +153,7 @@ public class TicTacToe extends JFrame {
                             return;
                         }
 
+                        // Checks if the game has drawed
                         if (checkDrawCondition()) {
                             playerLabel.setText("It's a draw!");
                             Tiescore++;
@@ -164,6 +167,7 @@ public class TicTacToe extends JFrame {
                     }
                 });
 
+                // Adds all the buttons to the JPanel that contains the board
                 boardButtons[i][j] = button;
                 boardPanel.add(button);
                 boardPanel.setBackground(Color.BLACK);
@@ -213,6 +217,7 @@ public class TicTacToe extends JFrame {
         });
 
 
+        // Adds all the JComponents to their respective JPanels
         controlPanel.add(scorePanel);
         scorePanel.add(emptyLabel1);
         scorePanel.add(scoreLabel);
@@ -279,14 +284,16 @@ public class TicTacToe extends JFrame {
             }
         }
 
-        // Check diagonals
+        // Check the two possible diagonals
         if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]) && !board[0][0].equals("")) {
+            //colors buttons background color
             for(int i = 0; i < 3; i++){
                 boardButtons[i][i].setBackground(Color.lightGray);
             }
             return true;
         }
         if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0]) && !board[0][2].equals("")) {
+            //colors buttons background color
             boardButtons[0][2].setBackground(Color.lightGray);
             boardButtons[1][1].setBackground(Color.lightGray);
             boardButtons[2][0].setBackground(Color.lightGray);
@@ -297,7 +304,7 @@ public class TicTacToe extends JFrame {
         return false;
     }
 
-    // Reset the board
+    // Resets the board
     private void reset() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -310,7 +317,7 @@ public class TicTacToe extends JFrame {
         playerLabel.setText("X to move");
     }
 
-    // Reset the hole game
+    // Resets the hole game
     private void fullReset(){
         reset();
         Xscore = 0;

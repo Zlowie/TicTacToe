@@ -16,26 +16,33 @@ public class GameMenu extends JFrame {
         JPanel menuPanel = new JPanel(new GridLayout(4, 1,0,5));
 
         setIconImage(Logo.getImage());
+
         //Styling section
+        //styling menuPanel
         menuPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         menuPanel.setBackground(Color.white);
 
+        //styling textPanel
         textPanel.setBackground(Color.white);
 
+        //styling titleLabel
         titleLabel.setFont(new Font("Helvetica", Font.BOLD, 30));
 
+        //styling local2P
         local2P.setFont(new Font("Arial", Font.BOLD, 20));
         local2P.setForeground(Color.WHITE);
         local2P.setBackground(new Color(52, 152, 219));
         local2P.setBorder(BorderFactory.createRaisedBevelBorder());
         local2P.setFocusPainted(false);
 
+        //styling singlePlayer
         singlePlayer.setFont(new Font("Arial", Font.BOLD, 20));
         singlePlayer.setForeground(Color.WHITE);
         singlePlayer.setBackground(new Color(52, 152, 219));
         singlePlayer.setBorder(BorderFactory.createRaisedBevelBorder());
         singlePlayer.setFocusPainted(false);
 
+        //styling exitButton
         exitButton.setFont(new Font("Arial", Font.BOLD, 20));
         exitButton.setForeground(Color.WHITE);
         exitButton.setBackground(new Color(52, 152, 219));
@@ -50,9 +57,11 @@ public class GameMenu extends JFrame {
         menuPanel.add(singlePlayer);
         menuPanel.add(exitButton);
 
+
         // Add an ActionListener to each button
         local2P.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                //starts a local 2 player game
                 new TicTacToe();
                 dispose();
             }
@@ -60,6 +69,7 @@ public class GameMenu extends JFrame {
 
         singlePlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                //starts a singleplayer game
                 new TicTacToeBot();
                 dispose();
             }
@@ -71,6 +81,7 @@ public class GameMenu extends JFrame {
                 System.exit(0);
             }
         });
+
 
         // Add the menu panel to the JFrame
         add(menuPanel);
@@ -85,6 +96,8 @@ public class GameMenu extends JFrame {
         setVisible(true);
     }
 
+
+    //main function / initializes game
     public static void main(String[] args) {
         new GameMenu();
     }

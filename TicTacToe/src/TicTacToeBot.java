@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.random.RandomGenerator;
 
 public class TicTacToeBot extends JFrame {
+    // Creates variables and components 
     private JButton[][] boardButtons;
     private JPanel boardPanel;
     private JPanel controlButtonPanel;
@@ -42,6 +42,7 @@ public class TicTacToeBot extends JFrame {
         setMinimumSize(new Dimension(400,400));
         setLocationRelativeTo(null);
 
+        // Initializing all the JComponents
         Logo = new ImageIcon("C:\\Kode\\Java\\TicTacToe\\TicTacToe\\src\\Logo.png");
         boardButtons = new JButton[3][3];
         controlPanel = new JPanel(new GridLayout(1, 3));
@@ -49,7 +50,7 @@ public class TicTacToeBot extends JFrame {
         scorePanel = new JPanel(new GridLayout(3, 3));
         menuPanel = new JPanel(new GridLayout(2,1));
         controlButtonPanel = new JPanel(new GridLayout(2, 1));
-        playerLabel = new JLabel("X to move", SwingConstants.CENTER);
+        playerLabel = new JLabel("Player to move", SwingConstants.CENTER);
         scoreLabel = new JLabel("Score", SwingConstants.CENTER);
         XscoreLabel = new JLabel(String.valueOf(Xscore), SwingConstants.CENTER);
         XTextLabel = new JLabel("X", SwingConstants.CENTER);
@@ -91,7 +92,7 @@ public class TicTacToeBot extends JFrame {
         // Initialize the board
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                //making all the 9 board buttons
+                // Making all the 9 board buttons
                 JButton button = new JButton("");
                 button.setFont(new Font("Arial", Font.PLAIN, 60));
                 button.setBorder(BorderFactory.createEmptyBorder());
@@ -122,7 +123,7 @@ public class TicTacToeBot extends JFrame {
                             return;
                         }
 
-                        // Check if the button is already filled
+                        // Checks if the button is already filled
                         if (!clickedButton.getText().equals("")) {
                             return;
                         }
@@ -133,7 +134,7 @@ public class TicTacToeBot extends JFrame {
                             clickedButton.setForeground(Color.red);
                         }
 
-                        // Check if the game has ended
+                        // Checks if the game has ended
                         if (checkWinCondition()) {
                             playerLabel.setText("Player " + (isPlayerX ? "X" : "O") + " wins!");
                             Xscore++;
@@ -146,6 +147,7 @@ public class TicTacToeBot extends JFrame {
                             isPlayerX = !isPlayerX;
                         }
 
+                        // Checks if the game has drawed
                         if (checkDrawCondition()) {
                             playerLabel.setText("It's a draw!");
                             Tiescore++;
@@ -155,12 +157,10 @@ public class TicTacToeBot extends JFrame {
                         }
 
                         botMove();
-
-                        // Switch to the next player
-                        //isPlayerX = !isPlayerX;
                     }
                 });
 
+                // Adds all the buttons to the JPanel that contains the board
                 boardButtons[i][j] = button;
                 boardPanel.add(button);
                 boardPanel.setBackground(Color.BLACK);
@@ -209,7 +209,7 @@ public class TicTacToeBot extends JFrame {
             }
         });
 
-
+        // Adds all the JComponents to their respective JPanels
         controlPanel.add(scorePanel);
         scorePanel.add(emptyLabel1);
         scorePanel.add(scoreLabel);
@@ -276,7 +276,7 @@ public class TicTacToeBot extends JFrame {
             }
         }
 
-        // Check diagonals
+        // Checks the two possible diagonals
         if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]) && !board[0][0].equals("")) {
             for(int i = 0; i < 3; i++){
                 boardButtons[i][i].setBackground(Color.lightGray);
@@ -294,8 +294,9 @@ public class TicTacToeBot extends JFrame {
         return false;
     }
 
-    // Reset the board
+    // Resets the board
     private void reset() {
+        // Runs through the whole board and resets the text and color of the buttons
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 boardButtons[i][j].setText("");
@@ -304,10 +305,10 @@ public class TicTacToeBot extends JFrame {
         }
         isPlayerX = true;
         gameEnded = false;
-        playerLabel.setText("X to move");
+        playerLabel.setText("Player to move");
     }
 
-    // Reset the hole game
+    // Resets the hole game
     private void fullReset(){
         reset();
         Xscore = 0;
@@ -319,6 +320,7 @@ public class TicTacToeBot extends JFrame {
     }
 
     private void botMove(){
+        // Puts the button array which contains the board, into a string array
         String[][] board = new String[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -326,26 +328,31 @@ public class TicTacToeBot extends JFrame {
             }
         }
 
+        // Generate a random position on the two dimensional board
         int x = (int)(Math.random()*3);
         int y = (int)(Math.random()*3);
 
+        // Checks if the random position is empty
         if(board[x][y].equals("")) {
             boardButtons[x][y].setForeground(Color.blue);
             boardButtons[x][y].setText("O");
+
+            // Checks if the move the bot made was a win or a draw
+            checkDrawCondition();
+            checkWinCondition();
+
+            // If there is a win condition when the bot made a move, the bot must have won
+            if(checkWinCondition()){
+                playerLabel.setText("Bot O wins!");
+                if(!isPlayerX){
+                    Oscore++;
+                }
+                OscoreLabel.setText(String.valueOf(Oscore));
+            }
+            isPlayerX = true;
         } else {
+            // If the random position wasn't empty find a new one
             botMove();
         }
-
-        checkDrawCondition();
-        checkWinCondition();
-
-        if(checkWinCondition()){
-            playerLabel.setText("Bot O wins!");
-            if(!isPlayerX){
-                Oscore++;
-            }
-            OscoreLabel.setText(String.valueOf(Oscore));
-        }
-        isPlayerX = true;
     }
 }
