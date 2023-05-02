@@ -6,7 +6,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 public class TicTacToeBot extends JFrame {
-    // Creates variables and components 
+    // Creates variables and components
     private JButton[][] boardButtons;
     private JPanel boardPanel;
     private JPanel controlButtonPanel;
@@ -105,23 +105,8 @@ public class TicTacToeBot extends JFrame {
                             return;
                         }
 
+                        //checks what button was pressed
                         JButton clickedButton = (JButton) e.getSource();
-                        int row = -1;
-                        int col = -1;
-
-                        // Find the row and column of the clicked button
-                        for (int i = 0; i < 3; i++) {
-                            for (int j = 0; j < 3; j++) {
-                                if (boardButtons[i][j] == clickedButton) {
-                                    row = i;
-                                    col = j;
-                                }
-                            }
-                        }
-
-                        if (row == -1 || col == -1) {
-                            return;
-                        }
 
                         // Checks if the button is already filled
                         if (!clickedButton.getText().equals("")) {
