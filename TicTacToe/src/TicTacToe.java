@@ -103,7 +103,6 @@ public class TicTacToe extends JFrame {
                             return;
                         }
 
-
                         //checks what button was pressed
                         JButton clickedButton = (JButton) e.getSource();
 

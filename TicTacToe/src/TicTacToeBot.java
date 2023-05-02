@@ -105,7 +105,7 @@ public class TicTacToeBot extends JFrame {
                             return;
                         }
 
-                        //checks what button was pressed
+                        //finds what button was pressed
                         JButton clickedButton = (JButton) e.getSource();
 
                         // Checks if the button is already filled
@@ -329,9 +329,7 @@ public class TicTacToeBot extends JFrame {
             // If there is a win condition when the bot made a move, the bot must have won
             if(checkWinCondition()){
                 playerLabel.setText("Bot O wins!");
-                if(!isPlayerX){
-                    Oscore++;
-                }
+                Oscore++;
                 OscoreLabel.setText(String.valueOf(Oscore));
             }
             isPlayerX = true;
