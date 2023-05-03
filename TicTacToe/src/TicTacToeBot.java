@@ -323,8 +323,8 @@ public class TicTacToeBot extends JFrame {
             boardButtons[x][y].setText("O");
 
             // Checks if the move the bot made was a win or a draw
-            checkDrawCondition();
-            checkWinCondition();
+            //checkDrawCondition();
+            //checkWinCondition();
 
             // If there is a win condition when the bot made a move, the bot must have won
             if(checkWinCondition()){
